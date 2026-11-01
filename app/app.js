@@ -1,9 +1,9 @@
-const VERSIE = "0.3.0";
+const VERSIE = "0.4.0";
 
 const $ = (s) => document.querySelector(s);
 const catNaam = Object.fromEntries(CATEGORIEEN.map((c) => [c.id, c.naam]));
 const thumb = (id) => `https://i.ytimg.com/vi/${id}/mqdefault.jpg`;
-const meta = (v) => [v.sub, `${v.min} min`].filter(Boolean).join(" · ");
+const meta = (v) => [v.sub, `${v.min} min`, KANALEN[v.kanaal]?.naam].filter(Boolean).join(" · ");
 
 // ---- per-telefoon onthouden (alleen gemak, mag leeg zijn) ----
 function lees(sleutel, standaard) {
@@ -235,6 +235,12 @@ addEventListener("online", netwerk);
 addEventListener("offline", netwerk);
 
 // ---- start ----
+$("#bronnen").replaceChildren(...Object.values(KANALEN).flatMap((k, i, a) => {
+  const l = document.createElement("a");
+  l.href = k.url; l.target = "_blank"; l.rel = "noopener"; l.textContent = k.naam;
+  return i < a.length - 1 ? [l, i < a.length - 2 ? ", " : " en "] : [l];
+}));
+$("#aantal").textContent = VIDEOS.length;
 $("#versie").textContent = `versie ${VERSIE}`;
 toonAanbevolen();
 toonLaatst();

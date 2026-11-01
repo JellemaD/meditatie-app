@@ -1,5 +1,12 @@
 # Versies — Meditatie app
 
+## 0.4.0 — 01-11-2026
+
+- 100 meditaties in plaats van 32 (wens van Elke). Van 4 kanalen: Meditation Moments (44), Denise van Beek (36), Gerjan Schoemaker (12), Radboudumc Mindfulness (8).
+- Twee nieuwe onderwerpen: Bodyscan, en Stilte & aandacht. "Dankbaarheid" heet nu "Zelfliefde & dank".
+- Per meditatie staat het kanaal erbij; de onderregel noemt alle kanalen.
+- Bewust weggelaten: chakra, manifesteren, energie-reiniging, lezingen, uitlegvideo's en kindermeditaties.
+
 ## 0.3.0 — 01-11-2026
 
 - Eigen speler: YouTube-knoppen, -titel en -logo uit tijdens het afspelen (keuze Durk: optie A).

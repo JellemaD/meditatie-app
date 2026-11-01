@@ -5,7 +5,7 @@
 Meditatie-app voor Elke: een rustige schil om de gratis YouTube-meditaties van Meditation Moments
 (kanaal [@MeditationMomentsApp](https://www.youtube.com/@MeditationMomentsApp)), zodat Elke niet naar YouTube hoeft
 en makkelijk een meditatie kan afspelen. Keuze Durk 01-11-2026: **optie B, video's ingebouwd in de app.**
-Achtergrond: `../ONDERZOEK - Meditation Moments.md`. Geen account, geen abonnement.
+Achtergrond: `../ONDERZOEK - Meditation Moments.md`. Sinds v0.4.0 ook video's van Denise van Beek, Gerjan Schoemaker en Radboudumc Mindfulness. Geen account, geen abonnement.
 
 ## Werkwijze (geldt voor elk item)
 
@@ -26,12 +26,11 @@ Achtergrond: `../ONDERZOEK - Meditation Moments.md`. Geen account, geen abonneme
 
 | # | Item | Af als… |
 |---|---|---|
-| B9 | **Videolijst nalopen** (Durk/Elke): `app/videos.js`, nu 32 video's in 8 onderwerpen. Weg wat niet past, erbij wat mist. | Durk of Elke zegt: lijst is goed. |
+| B12 | **Voorstel volgende functie** (Durk kiest): (1) Favorieten "Mijn meditaties" met een hartje, (2) "Hoeveel tijd heb je?" filter op duur, (3) dagelijkse herinnering (vraagt een kleine server). Advies: 1. | Durk heeft gekozen; de keuze staat hier. |
+| B9 | **Videolijst nalopen** (Durk/Elke): `app/videos.js`, nu 100 video's in 10 onderwerpen. Weg wat niet past. | Durk of Elke zegt: lijst is goed. |
 | B8 | **Evaluatie na 4 weken.** Hoe vaak gebruikt Elke hem? Wat mist ze? | Besluit: zo laten, uitbreiden of stoppen. |
 
 ## Later
-
-- **Uitbreiden met meer video's of kanalen** (Durk kiest wat en wanneer). Zie `docs/onderzoek/ONDERZOEK - YouTube-kanalen uitbreiden.md`: ±50 extra bij Meditation Moments (vooral lange live-sessies), top 3 andere kanalen Denise van Beek, Gerjan Schoemaker en Radboudumc.
 
 - Eigen meditaties met een AI-stem (B1, B3, B4): offline en zonder reclame. Pas als de YouTube-schil na 4 weken tekortschiet (B8).
   - B1 Stem kiezen: 8 voorbeelden in `stemkeuze/Stemkeuze meditatie-app.html`.
@@ -53,6 +52,7 @@ Achtergrond: `../ONDERZOEK - Meditation Moments.md`. Geen account, geen abonneme
 
 | # | Item | Klaar |
 |---|---|---|
+| B11 | **100 meditaties** (wens Elke): 4 kanalen (Meditation Moments, Denise van Beek, Gerjan Schoemaker, Radboudumc), 10 onderwerpen, kanaal per meditatie zichtbaar. Onderzoek: `docs/onderzoek/`. | 01-11-2026, v0.4.0 |
 | B10 | **Eigen speler zonder YouTube-tekst en -logo** (optie A): eigen voorkant en knoppen, YouTube-bediening uit, ondertitels uit. Lokaal getest; iPhone nog testen bij B7. | 01-11-2026, v0.3.0 |
 | B6 | **Repo + Google Sheet + online.** Repo [JellemaD/meditatie-app](https://github.com/JellemaD/meditatie-app), GitHub Pages via Action `pages.yml`, sheet via `sync-sheet.yml`. | 01-11-2026, v0.2.1 |
 | B2 | **Keuzes Durk**: naam "Meditatie app", hosting GitHub Pages, video's ingebouwd (optie B). | 01-11-2026 |
