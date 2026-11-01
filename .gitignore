@@ -1,0 +1,12 @@
+# Privé: WhatsApp-screenshot
+Schermafbeelding*.png
+# Groot en niet nodig online: stemvoorbeelden (opnieuw te maken met tools/)
+stemkeuze/
+# Lokaal
+.claude/
+__pycache__/
+*.pyc
+desktop.ini
+# Drive-snelkoppelingen
+*.gsheet
+*.gdoc

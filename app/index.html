@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Meditatie app</title>
+  <meta name="theme-color" content="#f6f1ea" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1f1b18" media="(prefers-color-scheme: dark)">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Meditatie app">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="home">
+    <header class="kop">
+      <p class="groet" id="groet">Hoi Elke</p>
+      <h1 id="vraag">Even rust?</h1>
+    </header>
+
+    <div id="offline" class="melding" hidden>Geen internet. De meditaties spelen af zodra je weer verbinding hebt.</div>
+
+    <section id="aanbevolen" class="aanbevolen" aria-label="Aanbevolen"></section>
+
+    <section id="laatst-blok" hidden>
+      <h2 class="sectie">Laatst geluisterd</h2>
+      <div id="laatst" class="lijst"></div>
+    </section>
+
+    <nav id="chips" class="chips" aria-label="Onderwerpen"></nav>
+    <div id="lijst" class="lijst"></div>
+
+    <footer class="voet">
+      Meditaties van <a href="https://www.youtube.com/@MeditationMomentsApp" target="_blank" rel="noopener">Meditation Moments</a> op YouTube
+      <span id="versie"></span>
+    </footer>
+  </main>
+
+  <section id="speler" class="speler" hidden aria-modal="true" role="dialog">
+    <button id="terug" class="terug" aria-label="Terug">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Terug
+    </button>
+    <div class="video"><div id="frame"></div></div>
+    <div class="info">
+      <p id="s-cat" class="s-cat"></p>
+      <h2 id="s-titel"></h2>
+      <p id="s-sub" class="s-sub"></p>
+      <p class="tip">Zet je telefoon op stil, zoek een fijne plek en druk op play.</p>
+    </div>
+  </section>
+
+  <script src="videos.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
