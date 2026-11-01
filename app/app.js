@@ -1,4 +1,4 @@
-const VERSIE = "0.4.0";
+const VERSIE = "0.5.0";
 
 const $ = (s) => document.querySelector(s);
 const catNaam = Object.fromEntries(CATEGORIEEN.map((c) => [c.id, c.naam]));
@@ -29,6 +29,38 @@ function aanbeveling(cat) {
   return opties[dag % opties.length];
 }
 
+// ---- favorieten (Mijn meditaties), alleen op deze telefoon ----
+const HART_SVG = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 20s-7-4.4-9.2-8.6C1.3 8.5 3 5 6.4 5c2 0 3.3 1.1 4.1 2.3h3c.8-1.2 2.1-2.3 4.1-2.3 3.4 0 5.1 3.5 3.6 6.4C19 15.6 12 20 12 20z" fill="currentColor"/></svg>';
+const favs = () => lees("favorieten", []);
+const isFav = (id) => favs().includes(id);
+function wisselFav(id) {
+  const f = favs();
+  schrijf("favorieten", f.includes(id) ? f.filter((x) => x !== id) : [id, ...f]);
+}
+
+// ---- hoeveel tijd heb je? ----
+const TIJDEN = [
+  { id: "alle", naam: "Alles", past: () => true },
+  { id: "5", naam: "± 5 min", past: (m) => m <= 7 },
+  { id: "10", naam: "± 10 min", past: (m) => m >= 8 && m <= 13 },
+  { id: "20", naam: "± 20 min", past: (m) => m >= 14 && m <= 25 },
+  { id: "lang", naam: "Langer", past: (m) => m > 25 },
+];
+let tijd = lees("tijd", "alle");
+if (!TIJDEN.some((x) => x.id === tijd)) tijd = "alle";
+const pastTijd = (v) => TIJDEN.find((x) => x.id === tijd).past(v.min);
+
+function toonTijden() {
+  $("#tijden").replaceChildren(...TIJDEN.map((x) => {
+    const b = document.createElement("button");
+    b.className = "chip";
+    b.textContent = x.naam;
+    b.setAttribute("aria-pressed", String(x.id === tijd));
+    b.onclick = () => { tijd = x.id; schrijf("tijd", x.id); toonTijden(); toonChips(); toonLijst(); };
+    return b;
+  }));
+}
+
 // ---- weergave ----
 function item(v) {
   const b = document.createElement("button");
@@ -36,6 +68,13 @@ function item(v) {
   b.innerHTML = `<img loading="lazy" alt="" src="${thumb(v.id)}"><div><div class="t"></div><div class="m"></div></div>`;
   b.querySelector(".t").textContent = v.titel;
   b.querySelector(".m").textContent = meta(v);
+  if (isFav(v.id)) {
+    const h = document.createElement("span");
+    h.className = "fav-teken";
+    h.setAttribute("aria-label", "In Mijn meditaties");
+    h.innerHTML = HART_SVG;
+    b.append(h);
+  }
   b.onclick = () => open(v);
   return b;
 }
@@ -63,12 +102,25 @@ function toonLaatst() {
   $("#laatst").replaceChildren(...lijst.map(item));
 }
 
+function toonFav() {
+  const lijst = favs().map((id) => VIDEOS.find((v) => v.id === id)).filter(Boolean);
+  $("#fav-blok").hidden = lijst.length === 0;
+  $("#fav").replaceChildren(...lijst.map(item));
+}
+
 let gekozen = lees("onderwerp", dagdeel().cat);
 function toonChips() {
   const chips = CATEGORIEEN.map((c) => {
     const b = document.createElement("button");
     b.className = "chip";
+    const n = VIDEOS.filter((v) => v.cat === c.id && pastTijd(v)).length;
     b.textContent = c.naam;
+    if (tijd !== "alle") {
+      const s = document.createElement("span");
+      s.className = "n"; s.textContent = n;
+      b.append(s);
+      b.disabled = n === 0 && c.id !== gekozen;
+    }
     b.setAttribute("aria-pressed", String(c.id === gekozen));
     b.onclick = () => { gekozen = c.id; schrijf("onderwerp", c.id); toonChips(); toonLijst(); };
     return b;
@@ -76,7 +128,11 @@ function toonChips() {
   $("#chips").replaceChildren(...chips);
 }
 function toonLijst() {
-  $("#lijst").replaceChildren(...VIDEOS.filter((v) => v.cat === gekozen).map(item));
+  const lijst = VIDEOS.filter((v) => v.cat === gekozen && pastTijd(v));
+  $("#lijst").replaceChildren(...lijst.map(item));
+  const t = TIJDEN.find((x) => x.id === tijd);
+  $("#leeg").hidden = lijst.length > 0;
+  $("#leeg").textContent = `Geen meditaties van ${t.naam.replace("± ", "ongeveer ").toLowerCase()} bij ${catNaam[gekozen]}. Kies een ander onderwerp of een andere tijd.`;
 }
 
 // ---- speler ----
@@ -193,18 +249,28 @@ function open(v, metGeschiedenis = true) {
   $("#s-cat").textContent = catNaam[v.cat];
   $("#s-titel").textContent = v.titel;
   $("#s-sub").textContent = meta(v);
+  toonHart();
   $("#speler").hidden = false;
   document.body.style.overflow = "hidden";
   schrijf("laatst", [v.id, ...lees("laatst", []).filter((x) => x !== v.id)].slice(0, 10));
   if (metGeschiedenis) history.pushState({ v: v.id }, "", `#${v.id}`);
 }
 
+function toonHart() {
+  const aan = isFav(huidig.id);
+  $("#hart").setAttribute("aria-pressed", String(aan));
+  $("#hart-tekst").textContent = aan ? "In Mijn meditaties" : "Bewaar in Mijn meditaties";
+}
+$("#hart").onclick = () => { if (huidig) { wisselFav(huidig.id); toonHart(); } };
+
 function sluit() {
   stop();
   huidig = null;
   $("#speler").hidden = true;
   document.body.style.overflow = "";
+  toonFav();
   toonLaatst();
+  toonLijst();
 }
 
 $("#voorkant").onclick = () => {
@@ -243,7 +309,9 @@ $("#bronnen").replaceChildren(...Object.values(KANALEN).flatMap((k, i, a) => {
 $("#aantal").textContent = VIDEOS.length;
 $("#versie").textContent = `versie ${VERSIE}`;
 toonAanbevolen();
+toonFav();
 toonLaatst();
+toonTijden();
 toonChips();
 toonLijst();
 netwerk();

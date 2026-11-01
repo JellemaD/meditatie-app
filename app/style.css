@@ -122,3 +122,21 @@ h1 { margin: 2px 0 0; font-size: 1.75rem; font-weight: 600; letter-spacing: -.01
 .tip { margin-top: 18px; color: var(--zacht); font-size: .92rem; }
 
 [hidden] { display: none !important; }
+
+/* Favorieten */
+.hart {
+  display: inline-flex; align-items: center; gap: 8px; margin-top: 14px; cursor: pointer;
+  border: 1px solid var(--rand); background: var(--kaart); color: var(--zacht);
+  border-radius: 999px; padding: 8px 14px; font-size: .92rem;
+}
+.hart svg { color: var(--rand); transition: transform .2s ease, color .2s ease; }
+.hart[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); background: var(--accent-zacht); }
+.hart[aria-pressed="true"] svg { color: var(--accent); transform: scale(1.1); }
+.item .fav-teken { flex: none; margin-left: auto; padding: 0 6px; color: var(--accent); display: grid; }
+
+/* Hoeveel tijd heb je? */
+.chips.tijden { margin-top: 0; margin-bottom: 0; }
+.chips.tijden + .chips { margin-top: 8px; }
+.chip .n { font-size: .78rem; opacity: .7; margin-left: 4px; }
+.chip:disabled { opacity: .4; cursor: default; }
+.leeg { color: var(--zacht); text-align: center; padding: 18px 8px; margin: 0; }

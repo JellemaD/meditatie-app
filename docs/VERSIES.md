@@ -1,5 +1,11 @@
 # Versies — Meditatie app
 
+## 0.5.0 — 01-11-2026
+
+- Favorieten: met het hartje in de speler bewaart Elke een meditatie in "Mijn meditaties", bovenaan het startscherm. In de lijsten staat een hartje bij haar favorieten. Alleen op haar eigen telefoon bewaard.
+- "Hoeveel tijd heb je?": knoppen Alles / ± 5 / ± 10 / ± 20 min / Langer. Per onderwerp staat erbij hoeveel er passen; onderwerpen zonder passende meditatie worden grijs.
+- De app onthoudt de laatst gekozen tijd en het laatste onderwerp.
+
 ## 0.4.0 — 01-11-2026
 
 - 100 meditaties in plaats van 32 (wens van Elke). Van 4 kanalen: Meditation Moments (44), Denise van Beek (36), Gerjan Schoemaker (12), Radboudumc Mindfulness (8).

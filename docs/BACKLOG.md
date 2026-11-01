@@ -26,7 +26,6 @@ Achtergrond: `../ONDERZOEK - Meditation Moments.md`. Sinds v0.4.0 ook video's va
 
 | # | Item | Af als… |
 |---|---|---|
-| B12 | **Voorstel volgende functie** (Durk kiest): (1) Favorieten "Mijn meditaties" met een hartje, (2) "Hoeveel tijd heb je?" filter op duur, (3) dagelijkse herinnering (vraagt een kleine server). Advies: 1. | Durk heeft gekozen; de keuze staat hier. |
 | B9 | **Videolijst nalopen** (Durk/Elke): `app/videos.js`, nu 100 video's in 10 onderwerpen. Weg wat niet past. | Durk of Elke zegt: lijst is goed. |
 | B8 | **Evaluatie na 4 weken.** Hoe vaak gebruikt Elke hem? Wat mist ze? | Besluit: zo laten, uitbreiden of stoppen. |
 
@@ -52,6 +51,7 @@ Achtergrond: `../ONDERZOEK - Meditation Moments.md`. Sinds v0.4.0 ook video's va
 
 | # | Item | Klaar |
 |---|---|---|
+| B12 | **Favorieten en "Hoeveel tijd heb je?"** (keuze Durk: 1 en 2). Hartje in de speler → "Mijn meditaties" bovenaan; tijdknoppen 5/10/20/langer. Herinnering (3) blijft bij Later. | 01-11-2026, v0.5.0 |
 | B11 | **100 meditaties** (wens Elke): 4 kanalen (Meditation Moments, Denise van Beek, Gerjan Schoemaker, Radboudumc), 10 onderwerpen, kanaal per meditatie zichtbaar. Onderzoek: `docs/onderzoek/`. | 01-11-2026, v0.4.0 |
 | B10 | **Eigen speler zonder YouTube-tekst en -logo** (optie A): eigen voorkant en knoppen, YouTube-bediening uit, ondertitels uit. Lokaal getest; iPhone nog testen bij B7. | 01-11-2026, v0.3.0 |
 | B6 | **Repo + Google Sheet + online.** Repo [JellemaD/meditatie-app](https://github.com/JellemaD/meditatie-app), GitHub Pages via Action `pages.yml`, sheet via `sync-sheet.yml`. | 01-11-2026, v0.2.1 |

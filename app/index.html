@@ -25,13 +25,21 @@
 
     <section id="aanbevolen" class="aanbevolen" aria-label="Aanbevolen"></section>
 
+    <section id="fav-blok" hidden>
+      <h2 class="sectie">Mijn meditaties</h2>
+      <div id="fav" class="lijst"></div>
+    </section>
+
     <section id="laatst-blok" hidden>
       <h2 class="sectie">Laatst geluisterd</h2>
       <div id="laatst" class="lijst"></div>
     </section>
 
+    <h2 class="sectie">Hoeveel tijd heb je?</h2>
+    <nav id="tijden" class="chips tijden" aria-label="Hoeveel tijd heb je"></nav>
     <nav id="chips" class="chips" aria-label="Onderwerpen"></nav>
     <div id="lijst" class="lijst"></div>
+    <p id="leeg" class="leeg" hidden></p>
 
     <footer class="voet">
       <span id="aantal"></span> meditaties van <span id="bronnen"></span> op YouTube
@@ -79,6 +87,10 @@
       <p id="s-cat" class="s-cat"></p>
       <h2 id="s-titel"></h2>
       <p id="s-sub" class="s-sub"></p>
+      <button id="hart" class="hart" aria-pressed="false">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 20s-7-4.4-9.2-8.6C1.3 8.5 3 5 6.4 5c2 0 3.3 1.1 4.1 2.3h3c.8-1.2 2.1-2.3 4.1-2.3 3.4 0 5.1 3.5 3.6 6.4C19 15.6 12 20 12 20z" fill="currentColor"/></svg>
+        <span id="hart-tekst">Bewaar in Mijn meditaties</span>
+      </button>
       <p class="tip">Zet je telefoon op stil, zoek een fijne plek en druk op play. Je kunt het scherm ook omdraaien en alleen luisteren.</p>
     </div>
   </section>
