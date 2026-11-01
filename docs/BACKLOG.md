@@ -31,6 +31,8 @@ Achtergrond: `../ONDERZOEK - Meditation Moments.md`. Geen account, geen abonneme
 
 ## Later
 
+- **Uitbreiden met meer video's of kanalen** (Durk kiest wat en wanneer). Zie `docs/onderzoek/ONDERZOEK - YouTube-kanalen uitbreiden.md`: ±50 extra bij Meditation Moments (vooral lange live-sessies), top 3 andere kanalen Denise van Beek, Gerjan Schoemaker en Radboudumc.
+
 - Eigen meditaties met een AI-stem (B1, B3, B4): offline en zonder reclame. Pas als de YouTube-schil na 4 weken tekortschiet (B8).
   - B1 Stem kiezen: 8 voorbeelden in `stemkeuze/Stemkeuze meditatie-app.html`.
   - B3 Teksten schrijven, B4 audio maken.
