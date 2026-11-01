@@ -1,5 +1,15 @@
 # Versies — Meditatie app
 
+## 0.3.0 — 01-11-2026
+
+- Eigen speler: YouTube-knoppen, -titel en -logo uit tijdens het afspelen (keuze Durk: optie A).
+- Eigen voorkant met grote play-knop; YouTube laadt pas na de tik op play.
+- Eigen rustige bediening: play/pauze, 15 seconden terug/vooruit, tijdbalk.
+- Ondertitels standaard uit.
+- Na afloop: "Klaar. Fijn dat je even de tijd voor jezelf nam."
+- Start de telefoon niet vanzelf (iPhone), dan verschijnt de video met "Tik op de video om te starten".
+- Bij pauze laat YouTube zelf nog kort titel en logo zien (mag niet worden afgedekt).
+
 ## 0.2.1 — 01-11-2026
 
 - Naam: "Meditatie app" (keuze Durk).

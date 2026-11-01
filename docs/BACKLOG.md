@@ -51,6 +51,7 @@ Achtergrond: `../ONDERZOEK - Meditation Moments.md`. Geen account, geen abonneme
 
 | # | Item | Klaar |
 |---|---|---|
+| B10 | **Eigen speler zonder YouTube-tekst en -logo** (optie A): eigen voorkant en knoppen, YouTube-bediening uit, ondertitels uit. Lokaal getest; iPhone nog testen bij B7. | 01-11-2026, v0.3.0 |
 | B6 | **Repo + Google Sheet + online.** Repo [JellemaD/meditatie-app](https://github.com/JellemaD/meditatie-app), GitHub Pages via Action `pages.yml`, sheet via `sync-sheet.yml`. | 01-11-2026, v0.2.1 |
 | B2 | **Keuzes Durk**: naam "Meditatie app", hosting GitHub Pages, video's ingebouwd (optie B). | 01-11-2026 |
 | B5 | **App v1 (schil om YouTube)**: begroeting en "Voor nu"-tip op tijd van de dag, 8 onderwerpen, 32 meditaties, speler in de app (youtube-nocookie), laatst geluisterd, te installeren op het beginscherm, opent ook zonder internet. Lokaal getest. Code: `app/`. | 01-11-2026, v0.2.0 |

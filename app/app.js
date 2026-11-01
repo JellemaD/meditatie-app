@@ -1,4 +1,4 @@
-const VERSIE = "0.2.1";
+const VERSIE = "0.3.0";
 
 const $ = (s) => document.querySelector(s);
 const catNaam = Object.fromEntries(CATEGORIEEN.map((c) => [c.id, c.naam]));
@@ -80,15 +80,116 @@ function toonLijst() {
 }
 
 // ---- speler ----
+// YouTube-speler zonder eigen YouTube-knoppen (controls=0), met onze eigen voorkant en bediening.
+// Er wordt pas iets van YouTube geladen als Elke op play drukt.
+// Afspeelstatus van YouTube (vast; YT bestaat pas na het laden)
+const SPEELT = 1, PAUZE = 2, KLAAR = 0;
+const staat = () => (speler?.getPlayerState ? speler.getPlayerState() : -9);
+let speler = null, huidig = null, klok = null, startWacht = null, ytLaden = null, slepen = false;
+
+function laadYT() {
+  if (!ytLaden) {
+    ytLaden = new Promise((ok, fout) => {
+      window.onYouTubeIframeAPIReady = ok;
+      const s = document.createElement("script");
+      s.src = "https://www.youtube.com/iframe_api";
+      s.onerror = fout;
+      document.head.append(s);
+    });
+  }
+  return ytLaden;
+}
+
+// Ondertitels uit: YouTube zet ze soms vanzelf aan
+function geenOndertitels(p) {
+  try { p.unloadModule("captions"); p.setOption("captions", "track", {}); } catch { /* geen ondertitels */ }
+}
+
+const mmss = (s) => { s = Math.max(0, Math.floor(s || 0)); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`; };
+
+function knop(speelt) {
+  $("#ic-play").toggleAttribute("hidden", speelt); // SVG kent .hidden niet, dus via het attribuut
+  $("#ic-pauze").toggleAttribute("hidden", !speelt);
+  $("#pp").setAttribute("aria-label", speelt ? "Pauze" : "Afspelen");
+}
+
+function voorkant(zichtbaar, tekst = "") {
+  $("#voorkant").classList.toggle("weg", !zichtbaar);
+  $("#vk-tekst").hidden = !tekst;
+  $("#vk-tekst").textContent = tekst;
+}
+
+function nieuwVak() {
+  const d = document.createElement("div");
+  d.id = "yt";
+  $("#yt").replaceWith(d);
+}
+
+function bijwerken() {
+  if (!speler?.getCurrentTime) return;
+  const t = speler.getCurrentTime(), d = speler.getDuration() || huidig.min * 60;
+  $("#positie").max = Math.floor(d);
+  if (!slepen) { $("#positie").value = Math.floor(t); $("#tijd").textContent = mmss(t); }
+  $("#duur").textContent = mmss(d);
+}
+
+async function start() {
+  if (speler) { speler.playVideo(); return; }
+  $("#voorkant").classList.add("laden");
+  try { await laadYT(); } catch {
+    $("#voorkant").classList.remove("laden");
+    voorkant(true, "Geen verbinding met YouTube. Probeer het zo nog eens.");
+    return;
+  }
+  const v = huidig;
+  speler = new YT.Player("yt", {
+    host: "https://www.youtube-nocookie.com",
+    videoId: v.id,
+    playerVars: { autoplay: 1, controls: 0, playsinline: 1, rel: 0, iv_load_policy: 3, disablekb: 1, fs: 0, cc_load_policy: 0 },
+    events: {
+      onReady: (e) => { if (huidig !== v) return; geenOndertitels(e.target); e.target.playVideo(); bijwerken(); },
+      onStateChange: (e) => {
+        if (huidig !== v) return;
+                if (e.data === SPEELT) {
+          clearTimeout(startWacht);
+          $("#voorkant").classList.remove("laden");
+          voorkant(false); $("#hint").hidden = true; knop(true); geenOndertitels(speler);
+          clearInterval(klok); klok = setInterval(bijwerken, 500);
+        } else if (e.data === PAUZE) {
+          knop(false); bijwerken();
+        } else if (e.data === KLAAR) {
+          knop(false); clearInterval(klok); bijwerken();
+          voorkant(true, "Klaar. Fijn dat je even de tijd voor jezelf nam.");
+        }
+      },
+    },
+  });
+  // Start de telefoon niet vanzelf (bijv. iPhone)? Dan de video zelf laten zien om op te tikken.
+  clearTimeout(startWacht);
+  startWacht = setTimeout(() => {
+    if (huidig !== v || staat() === SPEELT) return;
+    $("#voorkant").classList.remove("laden");
+    voorkant(false); $("#hint").hidden = false;
+  }, 3500);
+}
+
+function stop() {
+  clearInterval(klok); clearTimeout(startWacht);
+  try { speler?.destroy(); } catch { /* al weg */ }
+  speler = null;
+  nieuwVak();
+}
+
 function open(v, metGeschiedenis = true) {
-  const f = document.createElement("iframe");
-  // youtube-nocookie: geen cookies tot er op play wordt gedrukt
-  f.src = `https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&playsinline=1&rel=0&modestbranding=1`;
-  f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
-  f.allowFullscreen = true;
-  f.title = v.titel;
-  f.id = "frame";
-  $("#frame").replaceWith(f);
+  stop();
+  huidig = v;
+  $("#vk-img").src = thumb(v.id).replace("mqdefault", "hqdefault");
+  $("#voorkant").classList.remove("laden");
+  voorkant(true);
+  $("#hint").hidden = true;
+  knop(false);
+  $("#positie").max = v.min * 60; $("#positie").value = 0;
+  $("#tijd").textContent = "0:00"; $("#duur").textContent = `${v.min}:00`;
   $("#s-cat").textContent = catNaam[v.cat];
   $("#s-titel").textContent = v.titel;
   $("#s-sub").textContent = meta(v);
@@ -99,13 +200,27 @@ function open(v, metGeschiedenis = true) {
 }
 
 function sluit() {
-  const leeg = document.createElement("div");
-  leeg.id = "frame";
-  $("#frame").replaceWith(leeg); // stopt het geluid
+  stop();
+  huidig = null;
   $("#speler").hidden = true;
   document.body.style.overflow = "";
   toonLaatst();
 }
+
+$("#voorkant").onclick = () => {
+  if (staat() === KLAAR) speler.seekTo(0, true);
+  start();
+};
+$("#pp").onclick = () => {
+  if (staat() === SPEELT) speler.pauseVideo();
+  else if (staat() === KLAAR) { speler.seekTo(0, true); speler.playVideo(); }
+  else start();
+};
+const spring = (sec) => { if (speler?.getCurrentTime) { speler.seekTo(Math.max(0, speler.getCurrentTime() + sec), true); bijwerken(); } };
+$("#min15").onclick = () => spring(-15);
+$("#plus15").onclick = () => spring(15);
+$("#positie").oninput = () => { slepen = true; $("#tijd").textContent = mmss($("#positie").value); };
+$("#positie").onchange = () => { slepen = false; if (speler?.seekTo) speler.seekTo(Number($("#positie").value), true); else start(); };
 
 $("#terug").onclick = () => (history.state?.v ? history.back() : sluit());
 addEventListener("popstate", () => {

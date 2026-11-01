@@ -44,12 +44,42 @@
       <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Terug
     </button>
-    <div class="video"><div id="frame"></div></div>
+    <div class="video">
+      <div id="yt"></div>
+      <button id="voorkant" class="voorkant" aria-label="Afspelen">
+        <img id="vk-img" alt="">
+        <span class="vk-laag"></span>
+        <span id="vk-play" class="vk-play"><svg viewBox="0 0 24 24" width="34" height="34" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span>
+        <span id="vk-tekst" class="vk-tekst" hidden></span>
+      </button>
+    </div>
+    <p id="hint" class="hint" hidden>Tik op de video om te starten.</p>
+
+    <div class="bediening">
+      <div class="balk">
+        <span id="tijd">0:00</span>
+        <input id="positie" type="range" min="0" max="100" step="1" value="0" aria-label="Positie in de meditatie">
+        <span id="duur">0:00</span>
+      </div>
+      <div class="knoppen">
+        <button id="min15" class="klein" aria-label="15 seconden terug">
+          <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><text x="12" y="15.5" text-anchor="middle" font-size="7" font-family="system-ui" fill="currentColor">15</text></svg>
+        </button>
+        <button id="pp" class="pp" aria-label="Afspelen">
+          <svg id="ic-play" viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+          <svg id="ic-pauze" viewBox="0 0 24 24" width="30" height="30" aria-hidden="true" hidden><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/></svg>
+        </button>
+        <button id="plus15" class="klein" aria-label="15 seconden vooruit">
+          <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.4-5.7M20 4v4h-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><text x="12" y="15.5" text-anchor="middle" font-size="7" font-family="system-ui" fill="currentColor">15</text></svg>
+        </button>
+      </div>
+    </div>
+
     <div class="info">
       <p id="s-cat" class="s-cat"></p>
       <h2 id="s-titel"></h2>
       <p id="s-sub" class="s-sub"></p>
-      <p class="tip">Zet je telefoon op stil, zoek een fijne plek en druk op play.</p>
+      <p class="tip">Zet je telefoon op stil, zoek een fijne plek en druk op play. Je kunt het scherm ook omdraaien en alleen luisteren.</p>
     </div>
   </section>
 
