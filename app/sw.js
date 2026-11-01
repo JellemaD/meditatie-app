@@ -1,5 +1,5 @@
 // Bewaart de app zelf op de telefoon, zodat hij altijd opent. De video's komen van YouTube (alleen online).
-const CACHE = "meditatie-v0.5.0";
+const CACHE = "meditatie-v0.5.1";
 const BESTANDEN = ["./", "index.html", "style.css", "app.js", "videos.js", "manifest.webmanifest", "icon.svg", "icon-180.png", "icon-192.png", "icon-512.png"];
 
 self.addEventListener("install", (e) => {

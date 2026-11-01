@@ -49,8 +49,8 @@ h1 { margin: 2px 0 0; font-size: 1.75rem; font-weight: 600; letter-spacing: -.01
 
 /* Onderwerpen */
 .chips {
-  display: flex; gap: 8px; overflow-x: auto; margin: 22px -16px 12px; padding: 2px 16px;
-  scrollbar-width: none;
+  display: flex; gap: 8px; overflow-x: auto; margin: 0; padding: 2px 16px;
+  scrollbar-width: none; scroll-behavior: smooth;
 }
 .chips::-webkit-scrollbar { display: none; }
 .chip {
@@ -135,8 +135,22 @@ h1 { margin: 2px 0 0; font-size: 1.75rem; font-weight: 600; letter-spacing: -.01
 .item .fav-teken { flex: none; margin-left: auto; padding: 0 6px; color: var(--accent); display: grid; }
 
 /* Hoeveel tijd heb je? */
-.chips.tijden { margin-top: 0; margin-bottom: 0; }
-.chips.tijden + .chips { margin-top: 8px; }
+/* Knoppenrij die opzij schuift, met pijltjes als er meer is */
+.rij { position: relative; margin: 22px -16px 12px; }
+.rij.tijden-rij { margin-top: 0; margin-bottom: 0; }
+.rij.tijden-rij + .rij { margin-top: 8px; }
+.pijl {
+  position: absolute; top: 0; bottom: 0; width: 64px; border: 0; padding: 0; cursor: pointer;
+  display: flex; align-items: center; color: var(--tekst);
+}
+.pijl.rechts { right: 0; justify-content: flex-end; padding-right: 8px;
+  background: linear-gradient(90deg, transparent, var(--bg) 55%); }
+.pijl.links { left: 0; justify-content: flex-start; padding-left: 8px;
+  background: linear-gradient(270deg, transparent, var(--bg) 55%); }
+.pijl span {
+  width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--kaart); border: 1px solid var(--rand); box-shadow: var(--schaduw);
+}
 .chip .n { font-size: .78rem; opacity: .7; margin-left: 4px; }
 .chip:disabled { opacity: .4; cursor: default; }
 .leeg { color: var(--zacht); text-align: center; padding: 18px 8px; margin: 0; }

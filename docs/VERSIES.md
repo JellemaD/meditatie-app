@@ -1,5 +1,10 @@
 # Versies — Meditatie app
 
+## 0.5.1 — 01-11-2026
+
+- Pijltjes en een zachte vervaging aan de rand van de knoppenrijen (tijd en onderwerpen), zodat je ziet dat je kunt doorschuiven. Tik op het pijltje schuift de rij door (tip van Durk).
+- Het gekozen onderwerp schuift vanzelf in beeld.
+
 ## 0.5.0 — 01-11-2026
 
 - Favorieten: met het hartje in de speler bewaart Elke een meditatie in "Mijn meditaties", bovenaan het startscherm. In de lijsten staat een hartje bij haar favorieten. Alleen op haar eigen telefoon bewaard.

@@ -1,4 +1,4 @@
-const VERSIE = "0.5.0";
+const VERSIE = "0.5.1";
 
 const $ = (s) => document.querySelector(s);
 const catNaam = Object.fromEntries(CATEGORIEEN.map((c) => [c.id, c.naam]));
@@ -59,6 +59,41 @@ function toonTijden() {
     b.onclick = () => { tijd = x.id; schrijf("tijd", x.id); toonTijden(); toonChips(); toonLijst(); };
     return b;
   }));
+  $("#tijden")._bij?.();
+}
+
+// ---- knoppenrijen die opzij schuiven: pijltjes laten zien dat er meer is ----
+const CHEVRON = (d) => `<span><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="${d}" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>`;
+function schuifbaar(nav) {
+  const rij = nav.parentElement;
+  const maak = (kant, d, label) => {
+    const b = document.createElement("button");
+    b.className = `pijl ${kant}`; b.innerHTML = CHEVRON(d);
+    b.setAttribute("aria-label", label); b.tabIndex = -1;
+    b.onclick = () => nav.scrollBy({ left: (kant === "rechts" ? 1 : -1) * nav.clientWidth * 0.7 });
+    rij.append(b);
+    return b;
+  };
+  const r = maak("rechts", "M9 5l7 7-7 7", "Meer opties");
+  const l = maak("links", "M15 5l-7 7 7 7", "Terug");
+  const bij = () => {
+    const max = nav.scrollWidth - nav.clientWidth;
+    r.hidden = nav.scrollLeft >= max - 4;
+    l.hidden = nav.scrollLeft <= 4;
+  };
+  nav.addEventListener("scroll", bij, { passive: true });
+  addEventListener("resize", bij);
+  nav._bij = bij;
+  bij();
+}
+// Gekozen knop in beeld schuiven (alleen opzij, de pagina blijft staan)
+function toonGekozen(nav, direct = false) {
+  const k = nav.querySelector('[aria-pressed="true"]');
+  if (k) {
+    const doel = k.offsetLeft - (nav.clientWidth - k.offsetWidth) / 2;
+    nav.scrollTo({ left: Math.max(0, doel), behavior: direct ? "instant" : "smooth" });
+  }
+  nav._bij?.();
 }
 
 // ---- weergave ----
@@ -126,6 +161,7 @@ function toonChips() {
     return b;
   });
   $("#chips").replaceChildren(...chips);
+  toonGekozen($("#chips"));
 }
 function toonLijst() {
   const lijst = VIDEOS.filter((v) => v.cat === gekozen && pastTijd(v));
@@ -313,6 +349,10 @@ toonFav();
 toonLaatst();
 toonTijden();
 toonChips();
+schuifbaar($("#tijden"));
+schuifbaar($("#chips"));
+toonGekozen($("#chips"), true);
+toonGekozen($("#tijden"), true);
 toonLijst();
 netwerk();
 history.replaceState(null, "", location.pathname);
